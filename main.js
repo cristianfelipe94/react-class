@@ -1,13 +1,13 @@
 function Title(props) {
-    return React.createElement('h1', {className: 'title', title: props.title}, `${props.title}`)
+    return React.createElement('h1', {className: 'block__title'}, `${props.title}`)
 }
 
 function Paragraph(props) {
-    return React.createElement('p', {className: 'paragraph', title: props.paragraph}, `${props.paragraph}`)
+    return React.createElement('p', {className: 'paragraph'}, `${props.paragraph}`)
 }
 
 function Image(props) {
-    return React.createElement('img', {className: 'image', alt: 'this-image-has-not-load', src: props.src, width: '300px'})
+    return React.createElement('img', {className: 'block__image', alt: 'this-image-has-not-load', src: props.src, width: '300px'})
 }
 
 // function MainRender() {
@@ -28,7 +28,7 @@ function Image(props) {
 // }
 
 function Card(props) {
-    return React.createElement('div', {className: 'col-sm-12 col-md-4'}, [
+    return React.createElement('div', {className: 'col-sm-8 col-md-6 block__content'}, [
         React.createElement(Image, {src: props.url}),
         React.createElement(Title, {title: props.title}),
         React.createElement(Paragraph, {paragraph: props.paragraph})
@@ -42,6 +42,7 @@ fetch('https://api.tvmaze.com/singlesearch/shows?q=rick-&-morty&embed=episodes')
 })
 .then(function(respJSON) {
     const respJSONParsed = respJSON;
+    console.log(respJSONParsed);
     const elementsToBeRendered = [];
 
     for (let e = 0; e < 5; e++) {
@@ -49,7 +50,7 @@ fetch('https://api.tvmaze.com/singlesearch/shows?q=rick-&-morty&embed=episodes')
     }
 
     ReactDOM.render(
-        React.createElement('div', {className: 'container'}, [
+        React.createElement('div', {className: 'block'}, [
             React.createElement('div', {className: 'row'}, elementsToBeRendered)
         ]),
         document.getElementById('root')
