@@ -27,6 +27,14 @@ function Image(props) {
 //     return[Title(), Paragraph(), Image()]
 // }
 
+function Card(props) {
+    return React.createElement('div', {className: 'col-sm-12 col-md-4'}, [
+        React.createElement(Image, {src: props.url}),
+        React.createElement(Title, {title: props.title}),
+        React.createElement(Paragraph, {paragraph: props.paragraph})
+    ])
+};
+
 fetch('https://api.tvmaze.com/singlesearch/shows?q=rick-&-morty&embed=episodes')
 .then(function(response) {
     const respJSON = response.json();
@@ -34,25 +42,18 @@ fetch('https://api.tvmaze.com/singlesearch/shows?q=rick-&-morty&embed=episodes')
 })
 .then(function(respJSON) {
     const respJSONParsed = respJSON;
-    for (let n = 0; n < 5; n++) {
+    const elementsToBeRendered = [];
 
-        function Card(props) {
-            return React.createElement('div', {className: 'col-sm-12 col-md-4'}, [
-                React.createElement(Image, {src: props.url}),
-                React.createElement(Title, {title: props.title}),
-                React.createElement(Paragraph, {paragraph: props.paragraph})
-            ])
-        };
-        
-        ReactDOM.render(
-            React.createElement('div', {className: 'container'}, [
-                React.createElement('div', {className: 'row'}, [
-                    React.createElement(Card, {url: respJSONParsed._embedded.episodes[n].image.original, title: respJSONParsed._embedded.episodes[n].name, paragraph: respJSONParsed._embedded.episodes[n].summary}),
-                ])
-            ]),
-            document.getElementById('root')
-        );
+    for (let e = 0; e < 5; e++) {
+        elementsToBeRendered.push(React.createElement(Card, {url: respJSONParsed._embedded.episodes[e].image.original, title: respJSONParsed._embedded.episodes[e].name, paragraph: respJSONParsed._embedded.episodes[e].summary}));
     }
+
+    ReactDOM.render(
+        React.createElement('div', {className: 'container'}, [
+            React.createElement('div', {className: 'row'}, elementsToBeRendered)
+        ]),
+        document.getElementById('root')
+    );
 })
 
 
