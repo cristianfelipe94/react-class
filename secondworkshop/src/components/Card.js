@@ -15,6 +15,7 @@ class Card extends Component {
             image: "",
 			isData: false
 		};
+		this.setFavorite = this.setFavorite.bind(this);
 	}
 
 	componentDidMount() {
@@ -24,17 +25,30 @@ class Card extends Component {
 		this.setState({
             title: episodeTitle,
             summary: episodeSummary,
-            image: episodeImage,
+			image: episodeImage,
+			isFavorite: false,
             isData: true
         });
 	}
 
+	setFavorite() {
+		this.setState({
+			isFavorite: !this.state.isFavorite
+		})
+		console.log("Is it favorite: ", this.state.isFavorite)
+	}
+
 	render() {
+
+		
 		return (
 			<div className= "card__container">
 				{this.state.isData ? <Title dataTitle={this.state.title} /> : ""}
 				{this.state.isData ? <Summary dataSummary={this.state.summary} /> : ""}
 				{this.state.isData ? <Image dataImage={this.state.image} /> : ""}
+				<div>
+					<input className= {this.state.isFavorite ? "favorite__star" : "unfavorite__star"} type="checkbox" onChange={this.setFavorite}></input>
+				</div>
 			</div>
 		);
 	}

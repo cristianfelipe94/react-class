@@ -12,7 +12,7 @@ body {
 
 .card__container {
   width: 50%;
-  padding: 30px 15px;
+  padding: 50px 15px;
   margin: 0 auto;
   border-bottom: 2px solid #7ce6e5;
 }
@@ -37,4 +37,40 @@ body {
 .image__cover:hover {
   transform: scale(1.2);
   transition: 0.8s;
+}
+
+.favorite__star {
+  height: 0;
+  width: 0;
+}
+
+.unfavorite__star {
+  height: 0;
+  width: 0;
+}
+
+.favorite__star::before {
+  content: "";
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  display: inline-block;
+  background-image: url(./assets/star-favorite.svg);
+  background-repeat: no-repeat;
+  right: 0;
+  left: 0;
+  margin: 0px auto;
+}
+
+.unfavorite__star::before {
+  content: "";
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  display: inline-block;
+  background-image: url(./assets/star-unfavorite.svg);
+  background-repeat: no-repeat;
+  right: 0;
+  left: 0;
+  margin: 0px auto;
 }
