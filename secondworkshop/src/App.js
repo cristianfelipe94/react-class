@@ -17,6 +17,7 @@ class App extends Component {
       counter: 0,
       maxCards: 10
     }
+
     // this.getData = this.getData.bind(this);
   }
 
