@@ -12,7 +12,8 @@ class Card extends Component {
 		this.state = {
 			title: "",
 			summary: "",
-            image: "",
+			image: "",
+			cardId: "",
 			isData: false,
 			isFavorite: false
 		};
@@ -24,21 +25,40 @@ class Card extends Component {
 		const episodeSummary = this.props.dataSummary;
 		const episodeImage = this.props.dataImage;
 		const episodeFav = this.props.dataFav;
+		const episodeId = this.props.dataId;
 		this.setState({
             title: episodeTitle,
             summary: episodeSummary,
 			image: episodeImage,
 			isFavorite: episodeFav,
+			cardId: episodeId,
             isData: true
         });
 	}
 
 	setFavorite(event) {
-		console.log("Clicked: ", event.target);
+		// console.log(this.props.dataId);
+		// console.log(this.props.persistProp.globalData[this.props.dataId]);
+		
+		// console.log("Clicked: ", event.target);
 		this.setState({
 			isFavorite: !this.state.isFavorite
 		}, () => {
-			console.log("Is it favorite: ", this.state.isFavorite);
+			// console.log(this.props.dataId);
+			this.props.persistProp.globalSetter(this.state);
+
+			// this.props.persistProp.globalSetter(this.state);
+			// console.log(this.props.persistProp.globalData[this.props.dataId]);
+			// const clonedData = Object.assign(a, {dataFav: true});
+			// console.log(clonedData);
+			// // const a = clonedData.props
+			// a.dataFav = true;
+			// console.log(a.dataFav)
+			// const newData = Object.assign(clonedData, )
+			// this.props.persistProp.globalData[this.props.dataId].props.dataFav = this.state.isFavorite;
+			// console.log(a);
+			// console.log(this.props.persistProp.globalData[this.props.dataId]);
+			// this.props.setFav(this.state.isFavorite);
 		});
 	}
 
