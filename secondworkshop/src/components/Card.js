@@ -13,7 +13,8 @@ class Card extends Component {
 			title: "",
 			summary: "",
             image: "",
-			isData: false
+			isData: false,
+			isFavorite: false
 		};
 		this.setFavorite = this.setFavorite.bind(this);
 	}
@@ -22,25 +23,27 @@ class Card extends Component {
 		const episodeTitle = this.props.dataTitle;
 		const episodeSummary = this.props.dataSummary;
 		const episodeImage = this.props.dataImage;
+		const episodeFav = this.props.dataFav;
 		this.setState({
             title: episodeTitle,
             summary: episodeSummary,
 			image: episodeImage,
-			isFavorite: false,
+			isFavorite: episodeFav,
             isData: true
         });
 	}
 
-	setFavorite() {
+	setFavorite(event) {
+		console.log("Clicked: ", event.target);
 		this.setState({
 			isFavorite: !this.state.isFavorite
-		})
-		console.log("Is it favorite: ", this.state.isFavorite)
+		}, () => {
+			console.log("Is it favorite: ", this.state.isFavorite);
+		});
 	}
 
 	render() {
 
-		
 		return (
 			<div className= "card__container">
 				{this.state.isData ? <Title dataTitle={this.state.title} /> : ""}

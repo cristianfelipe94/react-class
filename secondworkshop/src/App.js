@@ -13,37 +13,70 @@ class App extends Component {
       title: "",
       summary: "",
       image: "",
+
       cards: [],
       counter: 0,
-      maxCards: 10
-    }
+      maxCards: 10,
 
+      displayFav: false
+    }
     // this.getData = this.getData.bind(this);
+    this.handleFav = this.handleFav.bind(this);
   }
 
   async componentDidMount() {
-    for (let i = 0; i < this.state.maxCards + 1; i++) {
-      const data = await FetchData(i);
-      // console.log(data);
-      const episodeTitle = data.name;
-      const episodeSummary = data.summary;
-      const episodeImage = data.image.original;
+    const isPrevCards = JSON.parse(localStorage.getItem("DataCards"));
+    if (isPrevCards) {
+      isPrevCards.forEach(element => {
+        this.state.cards.push(<Card dataTitle= {element.props.dataTitle} dataSummary= {element.props.dataSummary} dataImage= {element.props.dataImage} key= {element.key} dataFav = {element.props.dataFav}/>);
+      });
+      
+    } else {
+      for (let i = 0; i < this.state.maxCards + 1; i++) {
+        const data = await FetchData(i);
+        // console.log(data);
+        const episodeTitle = data.name;
+        const episodeSummary = data.summary;
+        const episodeImage = data.image.original;
+        this.setState({
+          title: episodeTitle,
+          summary: episodeSummary,
+          image: episodeImage,
+          counter: i
+        }, () => {
+          this.state.cards.push(<Card dataTitle= {this.state.title} dataSummary= {this.state.summary} dataImage= {this.state.image} key= {this.state.counter} dataFav = {false}/>);
+        });
+      };
       this.setState({
-        title: episodeTitle,
-        summary: episodeSummary,
-        image: episodeImage,
-        isData: true,
-        counter: i
+        isData: true
       }, () => {
-        this.state.cards.push(<Card dataTitle= {this.state.title} dataSummary= {this.state.summary} dataImage= {this.state.image} key= {i}/>)
+        if (this.state.isData) {
+          localStorage.setItem("DataCards", JSON.stringify(this.state.cards));
+        } else {
+          console.log("Error trying to set new data.")
+        }
       });
     }
   }
 
+  handleFav() {
+    this.setState({
+      displayFav: !this.state.displayFav
+    });
+  }
+
   render() {
+    const favoriteBtn = {
+      position: 'fixed'
+    }
+
     return(
-      <div id= "cards-wrapper">
-        {this.state.cards}
+      <div>
+        <button style= {favoriteBtn} onClick= {this.handleFav}>{this.state.displayFav? 'Ver todos' : 'Ver favoritos'}</button>
+        <div id= "cards-wrapper">
+          {/* {this.state.cards} */}
+          {this.state.displayFav? <h1>'Favs'</h1> : this.state.cards}
+        </div>
       </div>
     );
   };
