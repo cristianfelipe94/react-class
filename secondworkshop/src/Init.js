@@ -14,11 +14,6 @@ class Init extends Component {
         this.validate = this.validate.bind(this);
     }
 
-    componentDidMount() {
-        const bodyWrapper = document.getElementsByTagName('body');
-        bodyWrapper[0].setAttribute('class', 'body-form');
-    }
-
     validate() {
         this.setState ({
             error: ""
