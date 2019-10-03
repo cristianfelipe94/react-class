@@ -25,6 +25,7 @@ class App extends Component {
     }
     // this.getData = this.getData.bind(this);
     this.handleFav = this.handleFav.bind(this);
+    this.handleClear = this.handleClear.bind(this);
     this.setData = this.setData.bind(this);
   }
 
@@ -58,6 +59,7 @@ class App extends Component {
 
         this.state.cards.push(cardObject);
       };
+
       this.setState({
         isData: true
       }, () => {
@@ -74,7 +76,12 @@ class App extends Component {
     this.setState({
       displayFav: !this.state.displayFav
     });
-  }
+  };
+
+  handleClear() {
+    localStorage.clear();
+    window.location.reload();
+  };
 
   setData(addToFav) {
     // console.log("What to add into Favs: ", addToFav)
@@ -116,7 +123,7 @@ class App extends Component {
       if (this.state.displayFav) {
         return (
           <div>
-            <button className= "favorites-btn" onClick= {this.handleFav}>Ver todos</button>
+            <button className= "favorites-btn" onClick= {this.handleFav}>Go to Collection</button>
             <div id= "cards-wrapper">
               {favoriteCollection}
             </div>
@@ -125,7 +132,8 @@ class App extends Component {
       } else {
         return (
           <div>
-            <button className= "favorites-btn" onClick= {this.handleFav}>Ver favoritos</button>
+            <button className= "favorites-btn" onClick= {this.handleFav}>Go to Favorites</button>
+            <button className= "clear-btn" onClick= {this.handleClear}>Clear Storage</button>
             <div id= "cards-wrapper">
               {mainCollection}
             </div>
@@ -135,7 +143,7 @@ class App extends Component {
     } else {
       return (
         <div id= "cards-wrapper">
-          <h2>Sorry cards data is not ready.</h2>
+          <h2>Loading data...</h2>
         </div>
       )
     }

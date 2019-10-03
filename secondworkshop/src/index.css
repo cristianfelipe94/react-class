@@ -96,6 +96,21 @@
   z-index: 1;
 }
 
+.clear-btn {
+  position: fixed;
+  font-size: 15px;
+  top: 75px;
+  border: none;
+  border-bottom: 1px solid #7ce6e5;
+  display: block;
+  height: 50px;
+  color: white;
+  padding: 20px 30px;
+  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+  z-index: 1;
+}
+
 *:focus {
   outline: none;
 }

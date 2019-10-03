@@ -54,19 +54,25 @@ class Init extends Component {
             height: '100vh',
         }
 
-        if(this.state.isEpisode) {
-            return (
-                <App dataAmount= {this.state.episode} />
+        if(localStorage.length) {
+            return(
+                <App/>
             );
         } else {
-            return (
-                <div style= {formDisplay}>
-                    <label htmlFor= "episodes" className= "form-label">Select the amount of episodes:</label>
-                    <input type= "number" id= "episodes" placeholder= "Minimum of 1 episode and Maximum 30." className= "form-input"/>
-                    <button onClick= {this.validate} className= "form-btn">Generate cards</button>
-                    <p style= {errorMessage}>{this.state.error}</p>
-                </div>
-            );
+            if(this.state.isEpisode) {
+                return (
+                    <App dataAmount= {this.state.episode} />
+                );
+            } else {
+                return (
+                    <div style= {formDisplay}>
+                        <label htmlFor= "episodes" className= "form-label">Select the amount of episodes:</label>
+                        <input type= "number" id= "episodes" placeholder= "Minimum of 1 episode and Maximum 30." className= "form-input"/>
+                        <button onClick= {this.validate} className= "form-btn">Generate cards</button>
+                        <p style= {errorMessage}>{this.state.error}</p>
+                    </div>
+                );
+            }
         }
     };
 };
