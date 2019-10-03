@@ -19,7 +19,7 @@ class App extends Component {
 
       cards: [],
       counter: 0,
-      maxCards: 10,
+      maxCards: this.props.dataAmount,
 
       displayFav: false
     }
@@ -29,6 +29,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    console.log("Async triggered.", this.state.maxCards);
     const isPrevCards = JSON.parse(localStorage.getItem("DataCards"));
     if (isPrevCards) {
       // console.log("Response from LocalStorage: ", isPrevCards);
@@ -43,9 +44,9 @@ class App extends Component {
       
     } else {
 
-      for (let i = 0; i < this.state.maxCards + 1; i++) {
+      for (let i = 0; i < this.state.maxCards; i++) {
         const data = await FetchData(i);
-        // console.log("Data from Fetch: ", data);
+        console.log("Data from Fetch: ", i);
         const cardObject = {
           episodeTitle: data.name,
           episodeSummary: data.summary,

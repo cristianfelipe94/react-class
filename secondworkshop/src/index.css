@@ -1,10 +1,19 @@
-body {
+.body-interface {
   margin: 0 auto;
   font-family: 'Roboto', sans-serif;
   background-color: #20272b;
   color: white;
   padding: 0 0 50px;
   box-shadow: inset 0px 0px 30px 5px #0ca397b6
+}
+
+.body-form {
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+  background-color: #20272b;
+  color: white;
+  padding: 0 0 50px;
+  box-shadow: inset 0px 0px 30px 5px #0ca397b6;
 }
 
 .card__container {
@@ -89,4 +98,35 @@ body {
 
 *:focus {
   outline: none;
+}
+
+.form-label {
+  color: #7ce6e5;
+  font-size: 30px;
+  display: block;
+}
+
+.form-btn {
+  font-size: 15px;
+  margin: 0 auto;
+  border: none;
+  border-bottom: 1px solid #7ce6e5;
+  display: block;
+  height: 50px;
+  color: white;
+  padding: 20px 30px;
+  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+  z-index: 1;
+}
+
+.form-input {
+  background-color: transparent;
+  border: 1px solid #7ce6e5;
+  padding: 20px;
+  margin: 10px; 
+  color: #7ce6e5;
+  font-size: 14px;
+  text-align: center;
+  width: 275px;
 }
