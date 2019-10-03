@@ -1,13 +1,10 @@
 body {
   margin: 0 auto;
-  padding: 50px;
   font-family: 'Roboto', sans-serif;
-}
-
-body {
   background-color: #20272b;
   color: white;
   padding: 0 0 50px;
+  box-shadow: inset 0px 0px 30px 5px #0ca397b6
 }
 
 .card__container {
@@ -32,6 +29,7 @@ body {
   display: block;
   transform: scale(1);
   transition: 0.8s;
+  z-index: -1;
 }
 
 .image__cover:hover {
@@ -86,6 +84,7 @@ body {
   padding: 20px 30px;
   background-color: transparent;
   font-family: 'Roboto', sans-serif;
+  z-index: 1;
 }
 
 *:focus {
