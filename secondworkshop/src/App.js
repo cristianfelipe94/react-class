@@ -5,6 +5,8 @@ import {FetchData} from '../src/services';
 
 import Card from '../src/components/Card';
 
+import './index.css';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -99,9 +101,6 @@ class App extends Component {
   }
 
   render() {
-    const favoriteBtn = {
-      position: 'fixed'
-    }
 
     const mainCollection = this.state.cards.map((card) => {
       return <Card  dataTitle= {card.episodeTitle} dataSummary= {card.episodeSummary} dataImage= {card.episodeImage} key= {card.episodeId} dataId= {card.episodeId} dataFav= {card.episodeFav} globalprops= {this.setData}/>;
@@ -116,7 +115,7 @@ class App extends Component {
       if (this.state.displayFav) {
         return (
           <div>
-            <button style= {favoriteBtn} onClick= {this.handleFav}>Ver todos</button>
+            <button className= "favorites-btn" onClick= {this.handleFav}>Ver todos</button>
             <div id= "cards-wrapper">
               {favoriteCollection}
             </div>
@@ -125,7 +124,7 @@ class App extends Component {
       } else {
         return (
           <div>
-            <button style= {favoriteBtn} onClick= {this.handleFav}>Ver favoritos</button>
+            <button className= "favorites-btn" onClick= {this.handleFav}>Ver favoritos</button>
             <div id= "cards-wrapper">
               {mainCollection}
             </div>
