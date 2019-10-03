@@ -60,12 +60,13 @@ class App extends Component {
           episodeSummary: data.summary,
           episodeImage: data.image.original,
           episodeId: i,
-          episodeFav: this.state.isFav
+          episodeFav: this.state.isFav,
+          globalSetter: this.setData
         };
 
         this.state.cards.push(cardObject);
 
-        console.log(this.state.cards);
+        // console.log(this.state.cards);
         // const episodeTitle = data.name;
         // const episodeSummary = data.summary;
         // const episodeImage = data.image.original;
@@ -101,13 +102,38 @@ class App extends Component {
     });
   }
 
-  setData(cardToBeFav) {
-    console.log(cardToBeFav);
-    const persistenceData = {
-      globalData: this.state.cards,
-      globalSetter: this.setData
+  setData(addToFav) {
+    console.log(addToFav)
+
+    const cardObject = {
+      episodeTitle: addToFav.title,
+      episodeSummary: addToFav.summary,
+      episodeId: addToFav.cardId,
+      episodeImage: addToFav.image,
+      episodeFav: addToFav.isFavorite
     };
-    this.state.favCards.push(<Card dataTitle= {cardToBeFav.title} dataSummary= {cardToBeFav.summary} dataImage= {cardToBeFav.image} key= {cardToBeFav.cardId} id= {cardToBeFav.cardId} dataFav= {cardToBeFav.isFavorite} persistProp= {persistenceData}/>);
+
+    const toBeRemoved = this.state.cards.splice(addToFav.cardId, 1);
+    // console.log("After splice", this.state.cards);
+    
+    this.state.cards.push(cardObject);
+    // console.log("After push, not organized: ", this.state.cards)
+    
+    this.state.cards.sort((a, b) => {return a.episodeId - b.episodeId})
+    // console.log("After sort: ",this.state.cards);
+
+    console.log("New fav: ", cardObject);
+
+    // console.log(this.state.cards);
+    // const toBeRemoved = this.state.cards.splice(idCardToRemove, 1);
+    // console.log("Were removed: ", toBeRemoved);
+    // console.log("Full collection: ", this.state.cards);
+    // console.log(cardToBeFav);
+    // const persistenceData = {
+    //   globalData: this.state.cards,
+    //   globalSetter: this.setData
+    // };
+    // this.state.favCards.push(<Card dataTitle= {cardToBeFav.title} dataSummary= {cardToBeFav.summary} dataImage= {cardToBeFav.image} key= {cardToBeFav.cardId} dataId= {cardToBeFav.cardId} dataFav= {cardToBeFav.isFavorite} persistProp= {persistenceData}/>);
     // console.log(cardId, cardFavStatus);
     // console.log("Card to be changed: ", cardToBeEdited);
     // this.setState({
@@ -122,8 +148,10 @@ class App extends Component {
       position: 'fixed'
     }
 
-    const favoriteCollection = this.state.cards.map((card) => {
-      console.log(card);
+    const mainCollection = this.state.cards.map((card) => {
+      // console.log(card);
+      console.log("This card is not: ", card);
+      return <Card  dataTitle= {card.episodeTitle} dataSummary= {card.episodeSummary} dataImage= {card.episodeImage} key= {card.episodeId} dataId= {card.episodeId} dataFav= {card.episodeFav} globalprops= {this.setData}/>;
       // return card.filter(favProps => {
       //   console.log(favProps)
       //   Boolean(favProps);
@@ -141,6 +169,10 @@ class App extends Component {
     //   }
     // });
 
+    const favoriteCollection = this.state.cards.map((card) => {
+      return card.episodeFav ? <Card  dataTitle= {card.episodeTitle} dataSummary= {card.episodeSummary} dataImage= {card.episodeImage} key= {card.episodeId} dataId= {card.episodeId} dataFav= {card.episodeFav} globalprops= {this.setData}/> : "";
+    });
+
 
     if (this.state.isData) {
       if (this.state.displayFav) {
@@ -157,7 +189,7 @@ class App extends Component {
           <div>
             <button style= {favoriteBtn} onClick= {this.handleFav}>Ver favoritos</button>
             <div id= "cards-wrapper">
-              {favoriteCollection}
+              {mainCollection}
             </div>
           </div>
         )

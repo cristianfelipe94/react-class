@@ -44,8 +44,10 @@ class Card extends Component {
 		this.setState({
 			isFavorite: !this.state.isFavorite
 		}, () => {
-			// console.log(this.props.dataId);
-			this.props.persistProp.globalSetter(this.state);
+			// console.log(this.state);
+			console.log(this.state);
+			this.props.globalprops(this.state);
+			// this.props.persistProp.globalSetter(this.state);
 
 			// this.props.persistProp.globalSetter(this.state);
 			// console.log(this.props.persistProp.globalData[this.props.dataId]);
