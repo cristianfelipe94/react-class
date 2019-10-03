@@ -36,31 +36,12 @@ class Card extends Component {
         });
 	}
 
-	setFavorite(event) {
-		// console.log(this.props.dataId);
-		// console.log(this.props.persistProp.globalData[this.props.dataId]);
-		
-		// console.log("Clicked: ", event.target);
+	setFavorite() {
+		// console.log("Clicked card props: ", this.props.dataId);
 		this.setState({
 			isFavorite: !this.state.isFavorite
 		}, () => {
-			// console.log(this.state);
-			console.log(this.state);
 			this.props.globalprops(this.state);
-			// this.props.persistProp.globalSetter(this.state);
-
-			// this.props.persistProp.globalSetter(this.state);
-			// console.log(this.props.persistProp.globalData[this.props.dataId]);
-			// const clonedData = Object.assign(a, {dataFav: true});
-			// console.log(clonedData);
-			// // const a = clonedData.props
-			// a.dataFav = true;
-			// console.log(a.dataFav)
-			// const newData = Object.assign(clonedData, )
-			// this.props.persistProp.globalData[this.props.dataId].props.dataFav = this.state.isFavorite;
-			// console.log(a);
-			// console.log(this.props.persistProp.globalData[this.props.dataId]);
-			// this.props.setFav(this.state.isFavorite);
 		});
 	}
 
