@@ -1,29 +1,3 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class Title extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            title: ""
-        }
-    }
-
-    componentDidMount () {
-        const episodeTitle = this.props.dataTitle;
-        this.setState({
-            title: episodeTitle
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                <h2 className= "card__title">
-                    {this.state.title}
-                </h2>
-            </div>
-        );
-    }
-}
-
-export default Title;
+export default (props) => <h2 className="card__title"> {props.dataTitle}</h2>

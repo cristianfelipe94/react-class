@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 // As Service is not Exported as Default should be wrapped in with {}.
-import {FetchData} from '../src/services';
+import { FetchData } from '../src/services';
 
 import Card from '../src/components/Card';
 
@@ -27,6 +27,7 @@ class App extends Component {
     this.handleFav = this.handleFav.bind(this);
     this.handleClear = this.handleClear.bind(this);
     this.setData = this.setData.bind(this);
+    this.addFavourites = this.addFavourites.bind(this);
   }
 
   async componentDidMount() {
@@ -42,7 +43,7 @@ class App extends Component {
       this.setState({
         isData: true
       });
-      
+
     } else {
 
       for (let i = 0; i < this.state.maxCards; i++) {
@@ -83,6 +84,16 @@ class App extends Component {
     window.location.reload();
   };
 
+  addFavourites(index) {
+    this.setState({
+			cards: Object.assign({}, this.state.cards[index], {
+				episodeFav: !this.state.cards[index].episodeFav
+			}, () => {
+        console.log(this.state.cards[index])
+      })
+		});
+  }
+
   setData(addToFav) {
     // console.log("What to add into Favs: ", addToFav)
 
@@ -96,11 +107,11 @@ class App extends Component {
 
     this.state.cards.splice(addToFav.cardId, 1);
     // console.log("After splice", this.state.cards);
-    
+
     this.state.cards.push(cardObject);
     // console.log("After push, not organized: ", this.state.cards)
-    
-    this.state.cards.sort((a, b) => {return a.episodeId - b.episodeId})
+
+    this.state.cards.sort((a, b) => { return a.episodeId - b.episodeId })
     // console.log("After sort: ",this.state.cards);
 
     localStorage.setItem("DataCards", JSON.stringify(this.state.cards));
@@ -110,12 +121,12 @@ class App extends Component {
 
   render() {
 
-    const mainCollection = this.state.cards.map((card) => {
-      return <Card  dataTitle= {card.episodeTitle} dataSummary= {card.episodeSummary} dataImage= {card.episodeImage} key= {card.episodeId} dataId= {card.episodeId} dataFav= {card.episodeFav} globalprops= {this.setData}/>;
+    const mainCollection = this.state.cards && this.state.cards.map((card, index) => {
+      return <Card dataTitle={card.episodeTitle} add={this.addFavourites} indexValue={index} dataSummary={card.episodeSummary} dataImage={card.episodeImage} key={card.episodeId} dataId={card.episodeId} dataFav={card.episodeFav} />;
     });
 
-    const favoriteCollection = this.state.cards.map((card) => {
-      return card.episodeFav ? <Card  dataTitle= {card.episodeTitle} dataSummary= {card.episodeSummary} dataImage= {card.episodeImage} key= {card.episodeId} dataId= {card.episodeId} dataFav= {card.episodeFav} globalprops= {this.setData}/> : "";
+    const favoriteCollection = this.state.cards&& this.state.cards.map((card) => {
+      return card.episodeFav ? <Card dataTitle={card.episodeTitle} dataSummary={card.episodeSummary} dataImage={card.episodeImage} key={card.episodeId} dataId={card.episodeId} dataFav={card.episodeFav} /> : "";
     });
 
 
@@ -123,8 +134,8 @@ class App extends Component {
       if (this.state.displayFav) {
         return (
           <div>
-            <button className= "favorites-btn" onClick= {this.handleFav}>Go to Collection</button>
-            <div id= "cards-wrapper">
+            <button className="favorites-btn" onClick={this.handleFav}>Go to Collection</button>
+            <div id="cards-wrapper">
               {favoriteCollection}
             </div>
           </div>
@@ -132,9 +143,9 @@ class App extends Component {
       } else {
         return (
           <div>
-            <button className= "favorites-btn" onClick= {this.handleFav}>Go to Favorites</button>
-            <button className= "clear-btn" onClick= {this.handleClear}>Clear Storage</button>
-            <div id= "cards-wrapper">
+            <button className="favorites-btn" onClick={this.handleFav}>Go to Favorites</button>
+            <button className="clear-btn" onClick={this.handleClear}>Clear Storage</button>
+            <div id="cards-wrapper">
               {mainCollection}
             </div>
           </div>
@@ -142,7 +153,7 @@ class App extends Component {
       }
     } else {
       return (
-        <div id= "cards-wrapper">
+        <div id="cards-wrapper">
           <h2>Loading data...</h2>
         </div>
       )
