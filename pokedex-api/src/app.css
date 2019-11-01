@@ -80,6 +80,8 @@ body {
 }
 
 .clear--pokedex {
-  height: 75px;
+  height: 105px;
   width: 580px;
+  background-color: rgb(19, 17, 17);
+  position: fixed;
 }

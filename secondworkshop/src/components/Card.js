@@ -29,9 +29,9 @@ class Card extends Component {
 		this.setState({
             title: episodeTitle,
             summary: episodeSummary,
-			image: episodeImage,
-			isFavorite: episodeFav,
-			cardId: episodeId,
+						image: episodeImage,
+						isFavorite: episodeFav,
+						cardId: episodeId,
             isData: true
         });
 	}

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 // As Service is not Exported as Default should be wrapped in with {}.
 import {FetchData} from '../src/services';
 
