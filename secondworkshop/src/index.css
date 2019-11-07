@@ -1,12 +1,18 @@
 body {
   margin: 0 auto;
   font-family: 'Roboto', sans-serif;
-  background-color: #20272b;
+  background-color: #262c3a;
   color: white;
-  padding: 0 0 50px;
-  box-shadow: inset 0px 0px 30px 5px #0ca397b6
+  padding: 20px 0 0;
+  background-image: url("../src/assets/miss-wall.jpg");
+  background-size: contain;
+  max-width: 900px;
+  background-position: bottom;
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
 }
-
 
 .card__container {
   width: 50%;
@@ -136,4 +142,58 @@ body {
   font-size: 14px;
   text-align: center;
   width: 275px;
+}
+
+.home__gallery {
+  width: 400px;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.card__gallery {
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gallery__layout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 500px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.gallery__btn {
+  background-color: #7ce6e5;
+  color: #262c3a;
+  border: none;
+}
+
+.search__bar {
+  margin: 0 auto;
+  text-align: center;
+}
+.search__input {
+  margin: 0 20px;
+  padding: 10px 0;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #7ce6e5;
+  color: #7ce6e5;
+  font-size: 20px;
+}
+
+.search__label {
+  color: #7ce6e5;
+  font-size: 20px;
+}
+
+.search__layout {
+  padding: 50px 0;
 }

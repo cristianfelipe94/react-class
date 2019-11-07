@@ -1,49 +1,36 @@
 import React, {Component} from 'react';
 
-// As Service is not Exported as Default should be wrapped in with {}.
+import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom"
+
 import {FetchData} from '../src/services';
 
-import Card from '../src/components/Card';
+import SliderView from "./slider"
+import SearchView from "./search"
+import CardsView from "./cards"
+
+import NotFound from "./404"
 
 import './index.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super()
     this.state = {
       isData: false,
-      title: "",
-      summary: "",
-      image: "",
-      isFav: false,
-
       cards: [],
-      counter: 0,
-      maxCards: this.props.dataAmount,
-
-      displayFav: false
+      maxCards: 20
     }
-    // this.getData = this.getData.bind(this);
-    this.handleFav = this.handleFav.bind(this);
-    this.handleClear = this.handleClear.bind(this);
-    this.setData = this.setData.bind(this);
   }
 
   async componentDidMount() {
     const isPrevCards = JSON.parse(localStorage.getItem("DataCards"));
     if (isPrevCards) {
-      // console.log("Response from LocalStorage: ", isPrevCards);
-
+    // console.log("Response from LocalStorage: ", isPrevCards);
       this.setState({
-        cards: isPrevCards
-      });
-
-      this.setState({
+        cards: isPrevCards,
         isData: true
       });
-      
     } else {
-
       for (let i = 0; i < this.state.maxCards; i++) {
         const data = await FetchData(i);
         // console.log("Data from Fetch: ", i);
@@ -70,83 +57,24 @@ class App extends Component {
       });
     }
   }
-
-  handleFav() {
-    this.setState({
-      displayFav: !this.state.displayFav
-    });
-  };
-
-  handleClear() {
-    localStorage.clear();
-    window.location.reload();
-  };
-
-  setData(addToFav) {
-    // console.log("What to add into Favs: ", addToFav)
-
-    const cardObject = {
-      episodeTitle: addToFav.title,
-      episodeSummary: addToFav.summary,
-      episodeId: addToFav.cardId,
-      episodeImage: addToFav.image,
-      episodeFav: addToFav.isFavorite
-    };
-
-    this.state.cards.splice(addToFav.cardId, 1);
-    // console.log("After splice", this.state.cards);
-    
-    this.state.cards.push(cardObject);
-    // console.log("After push, not organized: ", this.state.cards)
-    
-    this.state.cards.sort((a, b) => {return a.episodeId - b.episodeId})
-    // console.log("After sort: ",this.state.cards);
-
-    localStorage.setItem("DataCards", JSON.stringify(this.state.cards));
-
-    // console.log("New fav: ", cardObject);
-  }
-
   render() {
-
-    const mainCollection = this.state.cards.map((card) => {
-      return <Card  dataTitle= {card.episodeTitle} dataSummary= {card.episodeSummary} dataImage= {card.episodeImage} key= {card.episodeId} dataId= {card.episodeId} dataFav= {card.episodeFav} globalprops= {this.setData}/>;
-    });
-
-    const favoriteCollection = this.state.cards.map((card) => {
-      return card.episodeFav ? <Card  dataTitle= {card.episodeTitle} dataSummary= {card.episodeSummary} dataImage= {card.episodeImage} key= {card.episodeId} dataId= {card.episodeId} dataFav= {card.episodeFav} globalprops= {this.setData}/> : "";
-    });
-
-
-    if (this.state.isData) {
-      if (this.state.displayFav) {
-        return (
-          <div>
-            <button className= "favorites-btn" onClick= {this.handleFav}>Go to Collection</button>
-            <div id= "cards-wrapper">
-              {favoriteCollection}
-            </div>
-          </div>
-        )
-      } else {
-        return (
-          <div>
-            <button className= "favorites-btn" onClick= {this.handleFav}>Go to Favorites</button>
-            <button className= "clear-btn" onClick= {this.handleClear}>Clear Storage</button>
-            <div id= "cards-wrapper">
-              {mainCollection}
-            </div>
-          </div>
-        )
-      }
-    } else {
-      return (
-        <div id= "cards-wrapper">
-          <h2>Loading data...</h2>
-        </div>
-      )
-    }
-  };
+    return(
+      <div>
+        <Router>
+          <nav>
+            <NavLink to="/" activeClassName="link--active" style={{color: "white", padding: "20px"}}>Slider</NavLink>
+            <NavLink to="/search" activeClassName="link--active" style={{color: "white", padding: "20px"}}>Searcher</NavLink>
+            <NavLink to="/cards" activeClassName="link--active" style={{color: "white", padding: "20px"}}>Check all episodes</NavLink>
+          </nav>
+          <Switch>
+            <Route exact path="/" render={(props) => <SliderView {...props} data={this.state.isData ? this.state.cards : ""}/>}/>
+            <Route path="/search" render={(props) => <SearchView {...props} data={this.state.isData ? this.state.cards : ""}/>}/>
+            <Route path="/cards" render={(props) => <CardsView {...props} data={this.state.isData ? this.state.cards : ""}/>}/>
+            <Route component={NotFound}/>
+          </Switch>
+        </Router>
+      </div>
+    )
+  }
 }
-
-export default App;
+export default App
